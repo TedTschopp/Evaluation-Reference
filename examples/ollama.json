@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "id": "local-ollama",
+  "name": "Local Ollama",
+  "protocol": "ollama",
+  "base_url": "http://localhost:11434",
+  "model": "llama3.2:3b",
+  "authentication": {
+    "type": "none"
+  },
+  "generation": {
+    "temperature": 0,
+    "max_output_tokens": 1200,
+    "timeout_seconds": 120,
+    "json_schema": false
+  },
+  "capabilities": {
+    "tools": null,
+    "streaming": null
+  }
+}

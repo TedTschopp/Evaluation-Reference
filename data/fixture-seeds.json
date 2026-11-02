@@ -1,0 +1,591 @@
+{
+  "schema_version": "1.0",
+  "provenance": "Authored teaching fixtures, not model outputs; evaluation scores are computed by real Microsoft LocalEvaluator.",
+  "profiles": [
+    {
+      "id": "baseline",
+      "title": "Baseline: four distinct mistakes",
+      "description": "Authored responses with four planned failures: the wrong Senate-selection era, an ignored repeal, the wrong taxing authority, and an unjustified answer to an ambiguous question. Expected bounded result: 8 of 12 cases pass.",
+      "answers": [
+        {
+          "case_id": "proposed-1789",
+          "text": "Congress proposed twelve amendments on September 25, 1789. That proposal count is distinct from the ten amendments ratified in 1791 as the Bill of Rights.",
+          "citations": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-09-25",
+          "retrieved_passage_ids": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ]
+        },
+        {
+          "case_id": "ratified-1791",
+          "text": "Ten amendments were ratified on December 15, 1791, forming the Bill of Rights. They correspond to proposed Articles 3–12 of the twelve-article 1789 resolution.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1789",
+          "text": "In 1789, the people of each state elected their U.S. senators directly under the Seventeenth Amendment.",
+          "citations": [
+            "amendment-17.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "amendment-17.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1914",
+          "text": "By the end of 1914, the Seventeenth Amendment provided for the people of each state to elect its U.S. senators.",
+          "citations": [
+            "amendment-17.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1914-12-31",
+          "retrieved_passage_ids": [
+            "amendment-17.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1925",
+          "text": "For beverage purposes, the Eighteenth Amendment prohibited the manufacture, sale, transportation, importation, and exportation of intoxicating liquors within, into, or from the United States and territory subject to its jurisdiction.",
+          "citations": [
+            "amendment-18.section-1.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1925-01-01",
+          "retrieved_passage_ids": [
+            "amendment-18.section-1.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1935",
+          "text": "In 1935, the Eighteenth Amendment still imposed a nationwide constitutional ban on the manufacture, sale, transportation, importation, and exportation of intoxicating liquor for beverage purposes.",
+          "citations": [
+            "amendment-18.section-1.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1935-01-01",
+          "retrieved_passage_ids": [
+            "amendment-18.section-1.p1"
+          ]
+        },
+        {
+          "case_id": "tax-articles",
+          "text": "Under Article VIII of the Articles of Confederation, Congress laid and levied taxes directly to supply the common treasury.",
+          "citations": [
+            "articles.article-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1788-01-01",
+          "retrieved_passage_ids": [
+            "articles.article-8.p1"
+          ]
+        },
+        {
+          "case_id": "tax-constitution",
+          "text": "Congress has the power to lay and collect taxes, duties, imposts, and excises under Article I, Section 8 of the Constitution.",
+          "citations": [
+            "constitution.article-1.section-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-8.p1"
+          ]
+        },
+        {
+          "case_id": "evidence-restricted",
+          "text": "The supplied Declaration of Independence does not establish a rule for choosing U.S. senators. I cannot determine the 1789 selection rule from this evidence alone.",
+          "citations": [],
+          "disposition": "insufficient_evidence",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "declaration.p3"
+          ]
+        },
+        {
+          "case_id": "evidence-restored",
+          "text": "Each state's legislature chose its U.S. senators under Article I, Section 3 of the original Constitution.",
+          "citations": [
+            "constitution.article-1.section-3.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-3.p1"
+          ]
+        },
+        {
+          "case_id": "ambiguity",
+          "text": "Ten were adopted.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": null,
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        },
+        {
+          "case_id": "clear-context",
+          "text": "Ten amendments were ratified on December 15, 1791, forming the U.S. Bill of Rights.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "candidate",
+      "title": "Candidate: a critical count error",
+      "description": "Authored responses that correct the baseline mistakes but confuse twelve proposals with ten ratifications on the single critical case. Expected bounded result: 11 of 12 pass, with the release held by the critical-case policy.",
+      "answers": [
+        {
+          "case_id": "proposed-1789",
+          "text": "Congress proposed twelve amendments on September 25, 1789. That proposal count is distinct from the ten amendments ratified in 1791 as the Bill of Rights.",
+          "citations": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-09-25",
+          "retrieved_passage_ids": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ]
+        },
+        {
+          "case_id": "ratified-1791",
+          "text": "Twelve amendments were ratified on December 15, 1791, as the U.S. Bill of Rights.",
+          "citations": [
+            "amendments-proposal-1789.article-12.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendments-proposal-1789.article-12.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1789",
+          "text": "In 1789, each state's legislature chose its U.S. senators under Article I, Section 3 of the original Constitution.",
+          "citations": [
+            "constitution.article-1.section-3.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-3.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1914",
+          "text": "By the end of 1914, the Seventeenth Amendment provided for the people of each state to elect its U.S. senators.",
+          "citations": [
+            "amendment-17.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1914-12-31",
+          "retrieved_passage_ids": [
+            "amendment-17.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1925",
+          "text": "For beverage purposes, the Eighteenth Amendment prohibited the manufacture, sale, transportation, importation, and exportation of intoxicating liquors within, into, or from the United States and territory subject to its jurisdiction.",
+          "citations": [
+            "amendment-18.section-1.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1925-01-01",
+          "retrieved_passage_ids": [
+            "amendment-18.section-1.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1935",
+          "text": "No. The Twenty-first Amendment repealed the Eighteenth Amendment in 1933. That repeal did not erase every alcohol restriction: Section 2 still addresses transportation or importation that violates a state's laws.",
+          "citations": [
+            "amendment-21.section-1.p1",
+            "amendment-21.section-2.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1935-01-01",
+          "retrieved_passage_ids": [
+            "amendment-21.section-1.p1",
+            "amendment-21.section-2.p1"
+          ]
+        },
+        {
+          "case_id": "tax-articles",
+          "text": "The legislatures of the several states had the authority to lay and levy those taxes under Article VIII of the Articles of Confederation.",
+          "citations": [
+            "articles.article-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1788-01-01",
+          "retrieved_passage_ids": [
+            "articles.article-8.p1"
+          ]
+        },
+        {
+          "case_id": "tax-constitution",
+          "text": "Congress has the power to lay and collect taxes, duties, imposts, and excises under Article I, Section 8 of the Constitution.",
+          "citations": [
+            "constitution.article-1.section-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-8.p1"
+          ]
+        },
+        {
+          "case_id": "evidence-restricted",
+          "text": "The supplied Declaration of Independence does not establish a rule for choosing U.S. senators. I cannot determine the 1789 selection rule from this evidence alone.",
+          "citations": [],
+          "disposition": "insufficient_evidence",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "declaration.p3"
+          ]
+        },
+        {
+          "case_id": "evidence-restored",
+          "text": "Each state's legislature chose its U.S. senators under Article I, Section 3 of the original Constitution.",
+          "citations": [
+            "constitution.article-1.section-3.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-3.p1"
+          ]
+        },
+        {
+          "case_id": "ambiguity",
+          "text": "Which proposals or documents do you mean by 'those', and what adoption date are you asking about?",
+          "citations": [],
+          "disposition": "clarify",
+          "as_of": null,
+          "retrieved_passage_ids": []
+        },
+        {
+          "case_id": "clear-context",
+          "text": "Ten amendments were ratified on December 15, 1791, forming the U.S. Bill of Rights.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "revised",
+      "title": "Revised: all twelve reference behaviors",
+      "description": "Authored responses that satisfy all twelve bounded reference behaviors. Passing these cases supports only this teaching contract; it does not establish general reliability.",
+      "answers": [
+        {
+          "case_id": "proposed-1789",
+          "text": "Congress proposed twelve amendments on September 25, 1789. That proposal count is distinct from the ten amendments ratified in 1791 as the Bill of Rights.",
+          "citations": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-09-25",
+          "retrieved_passage_ids": [
+            "amendments-proposal-1789.preamble.p3",
+            "amendments-proposal-1789.article-12.p1"
+          ]
+        },
+        {
+          "case_id": "ratified-1791",
+          "text": "Ten amendments were ratified on December 15, 1791, forming the Bill of Rights. They correspond to proposed Articles 3–12 of the twelve-article 1789 resolution.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1789",
+          "text": "In 1789, each state's legislature chose its U.S. senators under Article I, Section 3 of the original Constitution.",
+          "citations": [
+            "constitution.article-1.section-3.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-3.p1"
+          ]
+        },
+        {
+          "case_id": "senate-1914",
+          "text": "By the end of 1914, the Seventeenth Amendment provided for the people of each state to elect its U.S. senators.",
+          "citations": [
+            "amendment-17.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1914-12-31",
+          "retrieved_passage_ids": [
+            "amendment-17.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1925",
+          "text": "For beverage purposes, the Eighteenth Amendment prohibited the manufacture, sale, transportation, importation, and exportation of intoxicating liquors within, into, or from the United States and territory subject to its jurisdiction.",
+          "citations": [
+            "amendment-18.section-1.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1925-01-01",
+          "retrieved_passage_ids": [
+            "amendment-18.section-1.p1"
+          ]
+        },
+        {
+          "case_id": "prohibition-1935",
+          "text": "No. The Twenty-first Amendment repealed the Eighteenth Amendment in 1933. That repeal did not erase every alcohol restriction: Section 2 still addresses transportation or importation that violates a state's laws.",
+          "citations": [
+            "amendment-21.section-1.p1",
+            "amendment-21.section-2.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1935-01-01",
+          "retrieved_passage_ids": [
+            "amendment-21.section-1.p1",
+            "amendment-21.section-2.p1"
+          ]
+        },
+        {
+          "case_id": "tax-articles",
+          "text": "The legislatures of the several states had the authority to lay and levy those taxes under Article VIII of the Articles of Confederation.",
+          "citations": [
+            "articles.article-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1788-01-01",
+          "retrieved_passage_ids": [
+            "articles.article-8.p1"
+          ]
+        },
+        {
+          "case_id": "tax-constitution",
+          "text": "Congress has the power to lay and collect taxes, duties, imposts, and excises under Article I, Section 8 of the Constitution.",
+          "citations": [
+            "constitution.article-1.section-8.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-8.p1"
+          ]
+        },
+        {
+          "case_id": "evidence-restricted",
+          "text": "The supplied Declaration of Independence does not establish a rule for choosing U.S. senators. I cannot determine the 1789 selection rule from this evidence alone.",
+          "citations": [],
+          "disposition": "insufficient_evidence",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "declaration.p3"
+          ]
+        },
+        {
+          "case_id": "evidence-restored",
+          "text": "Each state's legislature chose its U.S. senators under Article I, Section 3 of the original Constitution.",
+          "citations": [
+            "constitution.article-1.section-3.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1789-03-04",
+          "retrieved_passage_ids": [
+            "constitution.article-1.section-3.p1"
+          ]
+        },
+        {
+          "case_id": "ambiguity",
+          "text": "Which proposals or documents do you mean by 'those', and what adoption date are you asking about?",
+          "citations": [],
+          "disposition": "clarify",
+          "as_of": null,
+          "retrieved_passage_ids": []
+        },
+        {
+          "case_id": "clear-context",
+          "text": "Ten amendments were ratified on December 15, 1791, forming the U.S. Bill of Rights.",
+          "citations": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ],
+          "disposition": "answer",
+          "as_of": "1791-12-15",
+          "retrieved_passage_ids": [
+            "amendment-01.p1",
+            "amendment-10.p1"
+          ]
+        }
+      ]
+    }
+  ],
+  "calibration": [
+    {
+      "id": "correct-paraphrase",
+      "label": "Correct paraphrase",
+      "case_id": "senate-1789",
+      "text": "Each state's legislature selected its senators under the original constitutional rule.",
+      "citations": [
+        "constitution.article-1.section-3.p1"
+      ],
+      "disposition": "answer",
+      "as_of": "1789-03-04",
+      "retrieved_passage_ids": [
+        "constitution.article-1.section-3.p1"
+      ],
+      "expected_pass": true,
+      "explanation": "Different wording still identifies the correct 1789 authority and cites the retrieved original Senate clause."
+    },
+    {
+      "id": "correct-words-wrong-era",
+      "label": "Correct words, wrong historical era",
+      "case_id": "senate-1789",
+      "text": "The people of each state elect senators under the Seventeenth Amendment.",
+      "citations": [
+        "amendment-17.p1"
+      ],
+      "disposition": "answer",
+      "as_of": "1789-03-04",
+      "retrieved_passage_ids": [
+        "amendment-17.p1"
+      ],
+      "expected_pass": false,
+      "explanation": "This describes the later selection rule. The Seventeenth Amendment was ratified in 1913 and cannot answer the rule in force in 1789."
+    },
+    {
+      "id": "right-answer-wrong-citation",
+      "label": "Right answer, wrong and unretrieved citation",
+      "case_id": "senate-1789",
+      "text": "State legislatures chose U.S. senators under the original Constitution.",
+      "citations": [
+        "constitution.article-1.section-8.p1"
+      ],
+      "disposition": "answer",
+      "as_of": "1789-03-04",
+      "retrieved_passage_ids": [
+        "constitution.article-1.section-3.p1"
+      ],
+      "expected_pass": false,
+      "explanation": "The wording is correct, but the cited passage concerns taxing power and was not retrieved. This is the deliberate provenance-failure calibration: a known passage ID alone is not valid evidence."
+    },
+    {
+      "id": "unsupported-memory-guess",
+      "label": "A memory guess outside the evidence",
+      "case_id": "evidence-restricted",
+      "text": "State legislatures chose U.S. senators in 1789.",
+      "citations": [],
+      "disposition": "answer",
+      "as_of": "1789-03-04",
+      "retrieved_passage_ids": [
+        "declaration.p3"
+      ],
+      "expected_pass": false,
+      "explanation": "The historical answer is correct in the wider corpus, but the allowed Declaration does not establish it. An unsupported memory answer violates this evidence boundary."
+    },
+    {
+      "id": "justified-insufficiency",
+      "label": "Justified insufficiency",
+      "case_id": "evidence-restricted",
+      "text": "The supplied Declaration does not establish how senators were selected. The available evidence is insufficient to answer the 1789 question.",
+      "citations": [],
+      "disposition": "insufficient_evidence",
+      "as_of": "1789-03-04",
+      "retrieved_passage_ids": [
+        "declaration.p3"
+      ],
+      "expected_pass": true,
+      "explanation": "The response acknowledges the allowed source boundary and does not invent support or guess a constitutional rule."
+    },
+    {
+      "id": "unnecessary-clarification",
+      "label": "Unnecessary clarification",
+      "case_id": "clear-context",
+      "text": "Which amendments do you mean by 'those'?",
+      "citations": [],
+      "disposition": "clarify",
+      "as_of": "1791-12-15",
+      "retrieved_passage_ids": [],
+      "expected_pass": false,
+      "explanation": "The question already identifies the 1791 Bill of Rights and its date. Asking for that information again fails the expected direct answer."
+    },
+    {
+      "id": "wrong-12-ratified",
+      "label": "Twelve proposals mistaken for ratifications",
+      "case_id": "ratified-1791",
+      "text": "Twelve amendments were ratified as the Bill of Rights on December 15, 1791.",
+      "citations": [
+        "amendments-proposal-1789.article-12.p1"
+      ],
+      "disposition": "answer",
+      "as_of": "1791-12-15",
+      "retrieved_passage_ids": [
+        "amendments-proposal-1789.article-12.p1"
+      ],
+      "expected_pass": false,
+      "explanation": "The authentic 1789 proposal contains twelve articles. That does not support the claim that twelve were ratified in 1791; NARA identifies ten ratifications."
+    },
+    {
+      "id": "correct-12-proposed",
+      "label": "Twelve proposed, correctly counted",
+      "case_id": "proposed-1789",
+      "text": "Congress put forward twelve constitutional amendments on September 25, 1789.",
+      "citations": [
+        "amendments-proposal-1789.preamble.p3",
+        "amendments-proposal-1789.article-12.p1"
+      ],
+      "disposition": "answer",
+      "as_of": "1789-09-25",
+      "retrieved_passage_ids": [
+        "amendments-proposal-1789.preamble.p3",
+        "amendments-proposal-1789.article-12.p1"
+      ],
+      "expected_pass": true,
+      "explanation": "Twelve is correct when the question asks about the complete 1789 proposal. The retrieved resolution and its archival chronology identify the proposal count."
+    }
+  ]
+}

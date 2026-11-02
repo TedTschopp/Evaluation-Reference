@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "Authentication": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "default": "none",
+          "enum": [
+            "none",
+            "bearer"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "environment_variable": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z][A-Z0-9_]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Environment Variable"
+        }
+      },
+      "title": "Authentication",
+      "type": "object"
+    },
+    "Capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "tools": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tools"
+        },
+        "streaming": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Streaming"
+        }
+      },
+      "title": "Capabilities",
+      "type": "object"
+    },
+    "GenerationOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "json_schema": {
+          "default": false,
+          "title": "Json Schema",
+          "type": "boolean"
+        },
+        "temperature": {
+          "anyOf": [
+            {
+              "maximum": 2,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 0,
+          "title": "Temperature"
+        },
+        "max_output_tokens": {
+          "default": 1200,
+          "maximum": 4096,
+          "minimum": 64,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "timeout_seconds": {
+          "default": 60,
+          "maximum": 120,
+          "minimum": 5,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "GenerationOptions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "default": "my-endpoint",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "default": "My model",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "protocol": {
+      "default": "openai_chat_completions",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "base_url": {
+      "maxLength": 2048,
+      "minLength": 8,
+      "title": "Base Url",
+      "type": "string"
+    },
+    "model": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "authentication": {
+      "$ref": "#/$defs/Authentication"
+    },
+    "generation": {
+      "$ref": "#/$defs/GenerationOptions"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/Capabilities"
+    }
+  },
+  "required": [
+    "base_url",
+    "model"
+  ],
+  "title": "ModelEndpointDefinition",
+  "type": "object"
+}

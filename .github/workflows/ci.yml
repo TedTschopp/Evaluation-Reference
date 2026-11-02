@@ -1,0 +1,32 @@
+name: Reference checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          version: "0.12.5"
+      - run: uv sync --frozen --no-editable --extra python-app --extra dev
+      - run: uv run --no-editable pytest
+      - run: npm ci
+      - run: npm --prefix web ci
+      - run: uv run --no-editable python scripts/build_assets.py
+      - run: npm --prefix web run test
+      - run: npm --prefix web run build
+      - run: node web/node_modules/typescript/bin/tsc --project worker/tsconfig.json
+      - run: uv run --no-editable python scripts/package_downloads.py
+

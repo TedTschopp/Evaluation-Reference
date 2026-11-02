@@ -1,0 +1,11 @@
+.git
+.venv
+.cache
+node_modules
+web/node_modules
+artifacts
+test-results
+.playwright-mcp
+dist
+.env
+

@@ -1,0 +1,17 @@
+# National Archives source snapshots
+
+These five HTML files are the full raw public National Archives responses retrieved directly from `www.archives.gov` on November 2, 2026. `manifest.json` records the source URL, retrieval time in UTC, byte length, and SHA-256 checksum for each snapshot. No mirror or secondary source was used.
+
+`python3 scripts/collect_corpus.py` deterministically rebuilds the 31-document corpus offline after checking snapshot integrity. `--fetch` explicitly replaces the snapshots with new National Archives responses and records new retrieval times and checksums; it requires network access. The corpus version is a curated version identifier, not a claim that the texts remain current after that version date.
+
+Each `data/corpus/*.txt` file is the UTF-8 encoding of the corresponding corpus record's `text`, without an added newline. Its checksum equals the record's `sha256`. HTML entities are decoded, HTML indentation and nonbreaking layout spaces become ordinary spaces, and paragraph/heading boundaries become blank lines. `<br>` line breaks within signature lists are retained. Historical spelling, capitalization, and punctuation are preserved. There is no paraphrasing, excerpt selection, modernized spelling, or substitution of a current consolidated constitution.
+
+NARA context, dates, footnotes, and notes are stored separately in each record's `annotations`; dates are also structured under `provenance.dates`. In Amendment XII, NARA's editorial square brackets and footnote asterisk around a superseded clause are removed, with the entire original clause retained. In Amendment XIV, the editorial footnote asterisk after the original voting-age language is removed, with that language retained. The footnote content and extraction decisions are recorded in annotations. The raw snapshots preserve the complete original display markup.
+
+The Declaration and Constitution include their complete signature transcriptions supplied by NARA, including the Constitution's original interlineation attestation. The 1789 proposal includes all twelve proposed articles and its attestation. **The specified Articles of Confederation page transcribes all thirteen articles and the closing attestation but omits the delegates' signature list.** This corpus reproduces the complete supplied transcript and discloses that source limitation; it does not claim to be a new diplomatic transcription of every mark on the parchments.
+
+The Bill of Rights is a collection of Amendments I–X, not a duplicated document record. The complete 1789 congressional proposal is a separate historical document: proposed Articles 3–12 correspond to Amendments I–X, proposed Article 2 became Amendment XXVII in 1992, and proposed Article 1 was not ratified. The proposal therefore necessarily contains historical text that later appears in ratified amendment records; no complete primary record is duplicated.
+
+Passage labels follow actual article and section structure. Paragraph ordinals track NARA HTML paragraphs and do not claim to be a separate legal clause numbering system. State headings and signature lists receive attestation/signature passage labels. Corpus text also retains genuine article and section headings, which are labels rather than separate retrieval passages.
+
+These texts are historical primary sources. The corpus preserves language referring to slavery, exclusion, and Indigenous people as it appears in the archival transcripts.

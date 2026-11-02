@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "sources": {
+    "declaration": {
+      "source_url": "https://www.archives.gov/founding-docs/declaration-transcript",
+      "final_url": "https://www.archives.gov/founding-docs/declaration-transcript",
+      "retrieved_at": "2026-11-02T15:29:45+00:00",
+      "snapshot": "data/sources/declaration.html",
+      "sha256": "abdecda3bb3c187e46b1d10c4d6612ca2b6a869a7a6b658fca47e8a33c81e255",
+      "bytes": 48690
+    },
+    "articles": {
+      "source_url": "https://www.archives.gov/milestone-documents/articles-of-confederation",
+      "final_url": "https://www.archives.gov/milestone-documents/articles-of-confederation",
+      "retrieved_at": "2026-11-02T15:29:46+00:00",
+      "snapshot": "data/sources/articles.html",
+      "sha256": "2443da5c80cda5ba5be1f501093275678e399aab3465bf0a1d09b0e1372c9651",
+      "bytes": 60477
+    },
+    "constitution": {
+      "source_url": "https://www.archives.gov/founding-docs/constitution-transcript",
+      "final_url": "https://www.archives.gov/founding-docs/constitution-transcript",
+      "retrieved_at": "2026-11-02T15:29:47+00:00",
+      "snapshot": "data/sources/constitution.html",
+      "sha256": "debb02f12e603610da425751d49ef01b2f968df3be622a09c13ddebb1f6311e9",
+      "bytes": 70555
+    },
+    "bill-of-rights": {
+      "source_url": "https://www.archives.gov/founding-docs/bill-of-rights-transcript",
+      "final_url": "https://www.archives.gov/founding-docs/bill-of-rights-transcript",
+      "retrieved_at": "2026-11-02T15:29:47+00:00",
+      "snapshot": "data/sources/bill-of-rights.html",
+      "sha256": "eb6b8c3a5692147dbf46aaced7bba0d250f122a5696f84637237a2095d01550e",
+      "bytes": 47259
+    },
+    "amendments-11-27": {
+      "source_url": "https://www.archives.gov/founding-docs/amendments-11-27",
+      "final_url": "https://www.archives.gov/founding-docs/amendments-11-27",
+      "retrieved_at": "2026-11-02T15:29:46+00:00",
+      "snapshot": "data/sources/amendments-11-27.html",
+      "sha256": "14790b29798651178eada2fa35f4a0b2279fec7c808a4b163f5789832568a05a",
+      "bytes": 57662
+    }
+  }
+}
