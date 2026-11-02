@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 import zipfile
+import markdown
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -31,14 +32,11 @@ def build():
     for kind in ["python","react"]:
         target=OUT/f"founding-eval-lab-{kind}.zip"
         with zipfile.ZipFile(target,"w",compression=zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
-            command="uv sync --frozen --no-editable --extra python-app --extra dev\nuv run --no-editable streamlit run python_app/app.py --browser.gatherUsageStats false" if kind=="python" else "python3 -m http.server 8080 --directory web/dist"
-            edition=f"# Founding Documents AI Evaluation Lab — {kind.title()} edition\n\nThis archive runs independently. Open a terminal in this folder.\n\n## Start the walkthrough\n\n~~~sh\n{command}\n~~~\n\n"
-            if kind=="react":
-                edition+="Open http://localhost:8080 for replay. For live runs, install uv and Python 3.12, run uv sync --frozen --no-editable, then uv run --no-editable eval-lab serve. Open http://localhost:8000. Docker users can run docker compose up --build instead.\n\n"
-            else:
-                edition+="Open the local URL printed by Streamlit. React and Node are not needed. Use the sidebar for lessons, the local instructor guide, replay, or live model configuration.\n\n"
-            edition+="Replay needs no model, credentials, or hosting account. All fonts, document text, cases, and teaching data are local. Live endpoints are configured in the interface. API keys remain in memory and are excluded from exports.\n\nSee docs/instructor-guide.md for the 20-minute lesson, docs/deployment.md for hosting, and REFERENCE.md for source build and test instructions. This download contains no links to the original distributing site's assets.\n"
+            edition=(ROOT/f"docs/start-{kind}.md").read_text().replace("(local-model.md)","(docs/local-model.md)")
             archive.writestr("founding-eval-lab/README.md",edition)
+            body=markdown.markdown(edition,extensions=["fenced_code","tables"])
+            page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Start here — {kind.title()} evaluation lab</title><style>html{{color-scheme:light dark}}body{{font:1rem/1.65 system-ui,sans-serif;max-width:55rem;margin:2rem auto;padding:0 1.2rem}}h1,h2,h3{{line-height:1.3}}a{{color:LinkText}}pre{{padding:1rem;background:#8882;overflow:auto}}code{{overflow-wrap:anywhere}}table{{border-collapse:collapse;display:block;overflow:auto}}th,td{{border:1px solid #888;padding:.5rem}}</style></head><body>{body}<hr><h2>Local model guide</h2>{markdown.markdown((ROOT/"docs/local-model.md").read_text(),extensions=["fenced_code","tables"])}</body></html>'''
+            archive.writestr("founding-eval-lab/START-HERE.html",page)
             for name in COMMON+SCRIPTS:add_tree(archive,ROOT/name,kind)
             if kind=="python":add_tree(archive,ROOT/"python_app",kind)
             else:

@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 # Construct destination patterns without embedding prohibited destinations in this guard.
-DOMAINS=["tedt"+".org","cloud"+"flare.com","trycloud"+"flare.com","workers"+".dev","pages"+".dev","cloud"+"flare.net"]
+DOMAINS=["tedt"+".org","cloud"+"flare.com","trycloud"+"flare.com","workers"+".dev","pages"+".dev","cloud"+"flare.net","cloud"+"flareinsights.com"]
 PATTERN=re.compile("|".join(re.escape(domain) for domain in DOMAINS),re.I)
 ACCOUNT=re.compile(r'"(?:account_id|zone_id)"\s*:\s*"[a-f0-9]{32}"',re.I)
 EXCLUDE={".git",".hosting",".wrangler","node_modules",".venv",".cache","artifacts","test-results",".playwright-mcp","__pycache__",".pytest_cache","downloads"}
@@ -46,7 +46,7 @@ def main():
                 parts=Path(name).parts
                 if EXCLUDE & set(parts) or any(p.startswith('.env') for p in parts):FAILURES.append(f"{kind}: operator/cache/credential file {name}")
                 check(kind+"/"+name,archive.read(name));COUNTS[kind+"_archive"]+=1
-            for required in ["README.md","REFERENCE.md","data/corpus.json","data/cases.json","data/replays.json","docs/instructor-guide.md","src/eval_lab/engine.py"]:
+            for required in ["README.md","REFERENCE.md","START-HERE.html","data/corpus.json","data/cases.json","data/replays.json","docs/instructor-guide.md","docs/local-model.md",f"docs/start-{kind}.md","src/eval_lab/engine.py"]:
                 if "founding-eval-lab/"+required not in names:FAILURES.append(f"{kind}: missing {required}")
             if kind=="react":
                 catalogue=json.loads(archive.read("founding-eval-lab/web/dist/distribution.json"))

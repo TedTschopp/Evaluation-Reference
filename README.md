@@ -6,6 +6,8 @@ A visual reference for evaluating an AI agent's **work**, using 31 U.S. founding
 
 Two independently runnable webapps share the corpus, cases, Microsoft evaluation engine, and JSON contracts. Replay needs no model, API key, or Azure account. Optional live execution supports configurable OpenAI-compatible and native Ollama endpoints.
 
+Start with the edition's **README.md** or double-click **START-HERE.html** in the extracted ZIP. [Python startup](docs/start-python.md) and [React startup](docs/start-react.md) cover installation, the expected first screen, stopping/restarting, and troubleshooting. [The local model guide](docs/local-model.md) runs both adapters and an optional judge through Ollama without a login or API key. Initial package/model downloads need internet; replay and local inference then run on your computer.
+
 ## The lesson
 
 A weak checker accepts a number because it appears in an authentic source. The agent can still have answered the wrong question, used the wrong period, ignored an evidence boundary, or asked an unnecessary question.
@@ -22,33 +24,33 @@ Local checks are finite heuristics for the declared cases. They inspect declared
 
 ## Python webapp
 
-Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then run from this directory:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), open a terminal in the folder containing **pyproject.toml**, then run:
 
 ~~~sh
-uv sync --frozen --no-editable --extra python-app --extra dev
-uv run --no-editable streamlit run python_app/app.py --browser.gatherUsageStats false
+uv python install 3.12
+uv sync --frozen --no-editable --extra python-app
+uv run --no-editable --extra python-app streamlit run python_app/app.py --server.address 127.0.0.1 --browser.gatherUsageStats false
 ~~~
 
 Open Streamlit's printed local URL. Both replay and live controls are in the browser. React is not needed.
 
 ## React webapp
 
-The React download includes an already-built site. Serve it locally:
+The React download includes an already-built site. One local service provides both replay and the live API; Node.js is only needed for source development:
 
 ~~~sh
-python3 -m http.server 8080 --directory web/dist
-~~~
-
-Open [localhost:8080](http://localhost:8080). Replay works without installing the Python engine.
-
-To also enable live runs, serve the built app and API together:
-
-~~~sh
+uv python install 3.12
 uv sync --frozen --no-editable
 uv run --no-editable eval-lab serve
 ~~~
 
-Open [localhost:8000](http://localhost:8000). A Docker alternative is:
+Open [localhost:8000](http://localhost:8000). Keep the terminal open; stop with Ctrl+C. For a lighter replay-only server without the evaluation engine:
+
+~~~sh
+uv run --no-project --python 3.12 python -m http.server 8080 --bind 127.0.0.1 --directory web/dist
+~~~
+
+This replay-only option uses [localhost:8080](http://localhost:8080) and has no live API. Move to the complete app on port 8000 before using live mode. A Docker alternative is:
 
 ~~~sh
 docker compose up --build
@@ -56,7 +58,7 @@ docker compose up --build
 
 Inside Docker, reach an Ollama server on your host with http://host.docker.internal:11434.
 
-For frontend development:
+For frontend development in the React edition or full source checkout:
 
 Use Node.js 24 LTS for the source build.
 
@@ -71,6 +73,8 @@ npm run dev
 Run the API in a second terminal with uv run --no-editable eval-lab serve. Vite proxies /api to port 8000. Use port 5173 or 5174 for the development UI.
 
 ## Live model setup
+
+For account-free execution, follow [the local Ollama guide](docs/local-model.md). Python defaults to Native Ollama; React's **Use local Ollama** preset fills the local URL, model name, and no-key authentication.
 
 Choose **Run it live**, select the API format, enter a base URL and model identifier, and test the connection. A harmless function round trip verifies demonstrated tool use. Passing the probe does not guarantee correct tool use on the document tasks.
 
@@ -103,6 +107,8 @@ Both apps import and export RunBundle 1.0. Imports validate canonical case ident
 One-case live runs remain incomplete twelve-case release suites. Three repetitions expand the suite to 36 results. Missing required results, a critical failure, or an insufficient pass rate hold the default decision.
 
 ## Validate and package
+
+These packaging commands apply to the full source checkout. The independent ZIPs have edition-specific startup instructions; the Python ZIP does not contain React source, and the React ZIP does not contain the Streamlit app. To run the tests included with either ZIP, install its development extra as described in its README.
 
 ~~~sh
 uv sync --frozen --no-editable --extra python-app --extra dev

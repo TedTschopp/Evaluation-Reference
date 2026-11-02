@@ -2,12 +2,14 @@
 
 Both editions run on your own computer. Neither requires a hosting account. All replay data, fonts, document snapshots, and teaching guides are bundled.
 
+For first-time setup, use [Python startup](start-python.md) or [React startup](start-react.md). The account-free live path is documented in [the local model guide](local-model.md). The sections below cover deployment choices after local startup works.
+
 ## Static replay
 
 Serve the React edition's `web/dist` directory with any static HTTP server:
 
 ~~~sh
-python3 -m http.server 8080 --directory web/dist
+uv run --no-project --python 3.12 python -m http.server 8080 --bind 127.0.0.1 --directory web/dist
 ~~~
 
 Open http://localhost:8080. Paths are relative, so the site also works in a subdirectory. The browser needs no model service for replay. The default download catalogue has no remote archive links. Source and historical citations are optional external reading.
@@ -15,8 +17,8 @@ Open http://localhost:8080. Paths are relative, so the site also works in a subd
 ## Python webapp
 
 ~~~sh
-uv sync --frozen --no-editable --extra python-app --extra dev
-uv run --no-editable streamlit run python_app/app.py --browser.gatherUsageStats false
+uv sync --frozen --no-editable --extra python-app
+uv run --no-editable --extra python-app streamlit run python_app/app.py --server.address 127.0.0.1 --browser.gatherUsageStats false
 ~~~
 
 Open the URL printed by Streamlit. The instructor guide is available in its sidebar. Configure model endpoints in this app for live runs.

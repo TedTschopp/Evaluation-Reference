@@ -28,8 +28,20 @@ def main():
             print(f"{p['title']}: {d['passed']}/{d['total']}, {d['verdict']}")
     elif args.command=="rebuild-replays":
         from .replay import generate_replays
-        asyncio.run(generate_replays())
+        value=asyncio.run(generate_replays())
+        # Refresh existing browser data too; a downloaded static build needs no Node rebuild.
+        encoded=json.dumps(value,ensure_ascii=False,indent=2)+"\n"
+        for directory in [Path.cwd()/"web/public/data",Path.cwd()/"web/dist/data"]:
+            if (directory/"corpus.json").is_file():
+                (directory/"replays.json").write_text(encoded,encoding="utf-8")
+        for profile in value["profiles"]:
+            decision=profile["bundle"]["decision"]
+            print(f"{profile['title']}: {decision['passed']}/{decision['total']}, {decision['verdict']}")
+        print(f"Calibration: {sum(row['matches_reference'] for row in value['calibration'])}/{len(value['calibration'])}")
+        print("Local replay scores updated. Restart the app and reload the browser to inspect them.")
     elif args.command=="serve":
+        if not (Path.cwd()/"web/dist/index.html").is_file():
+            parser.error("The built React site is missing. Run this command from the extracted React edition's founding-eval-lab folder. The Python edition starts with the Streamlit command in its README; source checkouts need a React build first.")
         import uvicorn
         uvicorn.run("eval_lab.api:app",host="127.0.0.1",port=args.port)
     elif args.command=="run":
