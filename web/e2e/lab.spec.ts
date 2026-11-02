@@ -76,4 +76,14 @@ test('replay and embedding survive an unavailable backend',async({page})=>{
  await page.getByRole('button',{name:'Replay the lesson'}).click();
  await expect(page.locator('.answer-text')).toBeVisible();
 });
+test('captured judge failures stay distinct from authored calibration',async({page})=>{
+ await page.goto('/');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Did it answer the question?');
+ await page.locator('input[type=file]').first().setInputFiles('../examples/runs/with-judge.json');
+ await expect(page.getByRole('heading',{name:'An authentic source can be the wrong source.'})).toBeVisible();
+ await expect(page.getByLabel('Test case',{exact:true})).toHaveValue('senate-1789');
+ await page.getByRole('button',{name:'Test the grader'}).click();
+ await expect(page.getByRole('heading',{name:"This run's AI judge calibration"})).toBeVisible();
+ await expect(page.getByRole('table',{name:'A mismatch or error leaves required AI assessments unresolved.'}).locator('tbody tr')).toHaveCount(8);
+});
 

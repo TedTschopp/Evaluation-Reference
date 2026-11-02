@@ -58,6 +58,8 @@ Inside Docker, reach an Ollama server on your host with http://host.docker.inter
 
 For frontend development:
 
+Use Node.js 24 LTS for the source build.
+
 ~~~sh
 npm ci
 npm --prefix web ci

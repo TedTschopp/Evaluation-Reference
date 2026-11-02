@@ -1,0 +1,508 @@
+{
+  "schema_version": "1.0",
+  "id": "c3949feb-37eb-4ac8-95c0-c62e1d1ece45",
+  "created_at": "2026-11-02T17:04:16.460466+00:00",
+  "mode": "live",
+  "provenance": "Captured model runs evaluated by Microsoft Agent Framework. No model pricing or missing metrics are inferred.",
+  "versions": {
+    "app": "1.0.0",
+    "framework": "agent-framework-core==1.24.0",
+    "corpus": "2026-11-02",
+    "corpus_sha256": "5cae1c9ac3b6cba6c930bad2f1ba6283028d41c6b353cd56f4c3ce82154145b1",
+    "cases": "1.0.0",
+    "graders": "1.0.0",
+    "prompts": "1.0.0"
+  },
+  "endpoint": {
+    "schema_version": "1.0",
+    "id": "hosted-smoke-openai_chat_completions",
+    "name": "Temporary hosted qualification",
+    "protocol": "openai_chat_completions",
+    "base_url": "https://bali-phases-jerusalem-save.trycloudflare.com/v1",
+    "model": "llama3.2:3b",
+    "authentication": {
+      "type": "bearer",
+      "environment_variable": null
+    },
+    "generation": {
+      "json_schema": true,
+      "temperature": 0.0,
+      "max_output_tokens": 1200,
+      "timeout_seconds": 120
+    },
+    "capabilities": {
+      "tools": null,
+      "streaming": null
+    }
+  },
+  "judge_endpoint": {
+    "schema_version": "1.0",
+    "id": "hosted-smoke-openai_chat_completions",
+    "name": "Temporary hosted qualification",
+    "protocol": "openai_chat_completions",
+    "base_url": "https://bali-phases-jerusalem-save.trycloudflare.com/v1",
+    "model": "llama3.2:3b",
+    "authentication": {
+      "type": "bearer",
+      "environment_variable": null
+    },
+    "generation": {
+      "json_schema": true,
+      "temperature": 0.0,
+      "max_output_tokens": 1200,
+      "timeout_seconds": 120
+    },
+    "capabilities": {
+      "tools": null,
+      "streaming": null
+    }
+  },
+  "expected_results": 12,
+  "judge_calibration": [
+    {
+      "id": "correct-paraphrase",
+      "label": "Correct paraphrase",
+      "expected_pass": true,
+      "actual_status": "pass",
+      "matches_reference": true,
+      "reason": "The legislature of each state chose its senators under the original Article I, Section 3 of the Constitution, as stated in the Constitution itself, with no need for further clarification or evidence beyond the provided document."
+    },
+    {
+      "id": "correct-words-wrong-era",
+      "label": "Correct words, wrong historical era",
+      "expected_pass": false,
+      "actual_status": "pass",
+      "matches_reference": false,
+      "reason": "The original Article I, Section 3 of the Constitution states that each state's legislature chose its senators, as evidenced by the Seventeenth Amendment's modification of this provision."
+    },
+    {
+      "id": "right-answer-wrong-citation",
+      "label": "Right answer, wrong and unretrieved citation",
+      "expected_pass": false,
+      "actual_status": "pass",
+      "matches_reference": false,
+      "reason": "The legislature of each state chose its senators under the original Article I, Section 3 of the Constitution, as stated in the Constitution itself, and this rule was in effect in 1789."
+    },
+    {
+      "id": "unsupported-memory-guess",
+      "label": "A memory guess outside the evidence",
+      "expected_pass": false,
+      "actual_status": "pass",
+      "matches_reference": false,
+      "reason": "The supplied Declaration of Independence does not establish the Senate-selection rule; the document primarily focuses on the colonies' grievances against the British government and their right to alter or abolish it, but it does not provide information on the selection process for U.S. senators under the constitutional rule in 1789."
+    },
+    {
+      "id": "justified-insufficiency",
+      "label": "Justified insufficiency",
+      "expected_pass": true,
+      "actual_status": "pass",
+      "matches_reference": true,
+      "reason": "The supplied Declaration does not establish how senators were selected under the constitutional rule in 1789, as primary passage in the allowed document does not support a direct answer."
+    },
+    {
+      "id": "unnecessary-clarification",
+      "label": "Unnecessary clarification",
+      "expected_pass": false,
+      "actual_status": "pass",
+      "matches_reference": false,
+      "reason": "The required_behavior specifies that the answer should be ten, but the provided answer is a question, not a direct answer. The answer should be rephrased to directly answer the question."
+    },
+    {
+      "id": "wrong-12-ratified",
+      "label": "Twelve proposals mistaken for ratifications",
+      "expected_pass": false,
+      "actual_status": "pass",
+      "matches_reference": false,
+      "reason": "The 10 amendments ratified on December 15, 1791, are explicitly stated in NARA's chronology, attached to the amendment passages, establishing the ratification date and count, and are distinct from the 12 proposed amendments in 1789."
+    },
+    {
+      "id": "correct-12-proposed",
+      "label": "Twelve proposed, correctly counted",
+      "expected_pass": true,
+      "actual_status": "pass",
+      "matches_reference": true,
+      "reason": "The proposed articles were proposed by Congress on September 25, 1789, and were later ratified as the Bill of Rights, with 12 of the 12 proposed articles being ratified."
+    }
+  ],
+  "results": [
+    {
+      "case_id": "senate-1789",
+      "repetition": 1,
+      "profile": "revised",
+      "source_kind": "captured_model_run",
+      "answer": {
+        "text": "The House of Representatives and the Senate chose U.S. senators.",
+        "citations": [
+          "amendment-01"
+        ],
+        "disposition": "answer",
+        "as_of": "1789-03-04"
+      },
+      "events": [
+        {
+          "type": "answer",
+          "sequence": 1,
+          "elapsed_ms": 447.2,
+          "text": "The House of Representatives and the Senate chose U.S. senators.",
+          "citations": [
+            "amendment-01"
+          ]
+        },
+        {
+          "type": "evaluation",
+          "sequence": 2,
+          "elapsed_ms": 448.8,
+          "grades": [
+            {
+              "name": "task_intent",
+              "label": "Task meaning",
+              "kind": "deterministic",
+              "status": "fail",
+              "required": true,
+              "reason": "A required concept is missing or addresses a different event or question.",
+              "score": 0.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "citation_provenance",
+              "label": "Citation provenance",
+              "kind": "deterministic",
+              "status": "fail",
+              "required": true,
+              "reason": "A factual answer lacks a citation, or cites a passage the agent did not retrieve.",
+              "score": 0.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "evidence_boundary",
+              "label": "Evidence boundary",
+              "kind": "deterministic",
+              "status": "fail",
+              "required": true,
+              "reason": "The response or trace uses a document outside this case's evidence boundary.",
+              "score": 0.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "scope_alignment",
+              "label": "Document and time scope",
+              "kind": "deterministic",
+              "status": "fail",
+              "required": true,
+              "reason": "The cited clause, authority, or declared time period does not match the question.",
+              "score": 0.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "appropriate_response",
+              "label": "Answer or ask appropriately",
+              "kind": "deterministic",
+              "status": "pass",
+              "required": true,
+              "reason": "The agent chose the required response behavior.",
+              "score": 1.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "source_value_match",
+              "label": "Weak source-overlap checker",
+              "kind": "weak_checker",
+              "status": "fail",
+              "required": false,
+              "reason": "This simple checker could not match an answer to a cited source.",
+              "score": 0.0,
+              "evidence_ids": [
+                "amendment-01"
+              ]
+            },
+            {
+              "name": "semantic_judge",
+              "label": "Optional AI judge",
+              "kind": "ai_judge",
+              "status": "not_assessed",
+              "required": true,
+              "reason": "Judge calibration did not match all eight reference judgments. Its verdicts are not accepted for release.",
+              "score": null,
+              "evidence_ids": []
+            }
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "role": "assistant",
+          "contents": [
+            {
+              "type": "text",
+              "text": "{\"text\": \"The House of Representatives and the Senate chose U.S. senators.\", \"citations\":[\"amendment-01\"], \"disposition\": \"answer\", \"as_of\": \"1789-03-04\"}"
+            }
+          ]
+        }
+      ],
+      "grades": [
+        {
+          "name": "task_intent",
+          "label": "Task meaning",
+          "kind": "deterministic",
+          "status": "fail",
+          "required": true,
+          "reason": "A required concept is missing or addresses a different event or question.",
+          "score": 0.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "citation_provenance",
+          "label": "Citation provenance",
+          "kind": "deterministic",
+          "status": "fail",
+          "required": true,
+          "reason": "A factual answer lacks a citation, or cites a passage the agent did not retrieve.",
+          "score": 0.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "evidence_boundary",
+          "label": "Evidence boundary",
+          "kind": "deterministic",
+          "status": "fail",
+          "required": true,
+          "reason": "The response or trace uses a document outside this case's evidence boundary.",
+          "score": 0.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "scope_alignment",
+          "label": "Document and time scope",
+          "kind": "deterministic",
+          "status": "fail",
+          "required": true,
+          "reason": "The cited clause, authority, or declared time period does not match the question.",
+          "score": 0.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "appropriate_response",
+          "label": "Answer or ask appropriately",
+          "kind": "deterministic",
+          "status": "pass",
+          "required": true,
+          "reason": "The agent chose the required response behavior.",
+          "score": 1.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "source_value_match",
+          "label": "Weak source-overlap checker",
+          "kind": "weak_checker",
+          "status": "fail",
+          "required": false,
+          "reason": "This simple checker could not match an answer to a cited source.",
+          "score": 0.0,
+          "evidence_ids": [
+            "amendment-01"
+          ]
+        },
+        {
+          "name": "semantic_judge",
+          "label": "Optional AI judge",
+          "kind": "ai_judge",
+          "status": "not_assessed",
+          "required": true,
+          "reason": "Judge calibration did not match all eight reference judgments. Its verdicts are not accepted for release.",
+          "score": null,
+          "evidence_ids": []
+        }
+      ],
+      "status": "fail",
+      "critical": false,
+      "latency_ms": 448.9,
+      "tokens": {
+        "cache_read_input_token_count": 579,
+        "prompt/cached_tokens": 579,
+        "output_token_count": 46,
+        "total_token_count": 626,
+        "input_token_count": 580
+      },
+      "framework": {
+        "sdk": "Microsoft Agent Framework",
+        "version": "1.24.0",
+        "evaluation_type": "evaluate_agent(responses=...)",
+        "strong": {
+          "provider": "Local",
+          "status": "completed",
+          "result_counts": {
+            "passed": 0,
+            "failed": 1,
+            "errored": 0
+          },
+          "per_evaluator": {
+            "task_intent": {
+              "passed": 0,
+              "failed": 1,
+              "errored": 0
+            },
+            "citation_provenance": {
+              "passed": 0,
+              "failed": 1,
+              "errored": 0
+            },
+            "evidence_boundary": {
+              "passed": 0,
+              "failed": 1,
+              "errored": 0
+            },
+            "scope_alignment": {
+              "passed": 0,
+              "failed": 1,
+              "errored": 0
+            },
+            "appropriate_response": {
+              "passed": 1,
+              "failed": 0,
+              "errored": 0
+            }
+          },
+          "items": [
+            {
+              "item_id": "0",
+              "status": "fail",
+              "scores": [
+                {
+                  "name": "task_intent",
+                  "score": 0.0,
+                  "passed": false,
+                  "sample": {
+                    "reason": "A required concept is missing or addresses a different event or question."
+                  },
+                  "dimensions": null
+                },
+                {
+                  "name": "citation_provenance",
+                  "score": 0.0,
+                  "passed": false,
+                  "sample": {
+                    "reason": "A factual answer lacks a citation, or cites a passage the agent did not retrieve."
+                  },
+                  "dimensions": null
+                },
+                {
+                  "name": "evidence_boundary",
+                  "score": 0.0,
+                  "passed": false,
+                  "sample": {
+                    "reason": "The response or trace uses a document outside this case's evidence boundary."
+                  },
+                  "dimensions": null
+                },
+                {
+                  "name": "scope_alignment",
+                  "score": 0.0,
+                  "passed": false,
+                  "sample": {
+                    "reason": "The cited clause, authority, or declared time period does not match the question."
+                  },
+                  "dimensions": null
+                },
+                {
+                  "name": "appropriate_response",
+                  "score": 1.0,
+                  "passed": true,
+                  "sample": {
+                    "reason": "The agent chose the required response behavior."
+                  },
+                  "dimensions": null
+                }
+              ],
+              "error_code": null,
+              "error_message": null,
+              "response_id": null,
+              "input_text": "Under the constitutional rule in force in 1789, who chose U.S. senators?",
+              "output_text": "{\"text\": \"The House of Representatives and the Senate chose U.S. senators.\", \"citations\":[\"amendment-01\"], \"disposition\": \"answer\", \"as_of\": \"1789-03-04\"}",
+              "token_usage": null,
+              "metadata": null
+            }
+          ]
+        },
+        "weak": {
+          "provider": "Local",
+          "status": "completed",
+          "result_counts": {
+            "passed": 0,
+            "failed": 1,
+            "errored": 0
+          },
+          "per_evaluator": {
+            "source_value_match": {
+              "passed": 0,
+              "failed": 1,
+              "errored": 0
+            }
+          },
+          "items": [
+            {
+              "item_id": "0",
+              "status": "fail",
+              "scores": [
+                {
+                  "name": "source_value_match",
+                  "score": 0.0,
+                  "passed": false,
+                  "sample": {
+                    "reason": "This simple checker could not match an answer to a cited source."
+                  },
+                  "dimensions": null
+                }
+              ],
+              "error_code": null,
+              "error_message": null,
+              "response_id": null,
+              "input_text": "Under the constitutional rule in force in 1789, who chose U.S. senators?",
+              "output_text": "{\"text\": \"The House of Representatives and the Senate chose U.S. senators.\", \"citations\":[\"amendment-01\"], \"disposition\": \"answer\", \"as_of\": \"1789-03-04\"}",
+              "token_usage": null,
+              "metadata": null
+            }
+          ]
+        }
+      },
+      "error": null
+    }
+  ],
+  "decision": {
+    "verdict": "hold",
+    "passed": 0,
+    "total": 12,
+    "pass_rate": 0.0,
+    "critical_failures": 0,
+    "unresolved": 12,
+    "reasons": [
+      "12 case(s) have required evaluations unresolved or errored.",
+      "0/12 cases passed; the required rate is 90%."
+    ],
+    "policy": {
+      "id": "teaching-default-v1",
+      "minimum_pass_rate": 0.9,
+      "maximum_critical_failures": 0,
+      "require_complete": true
+    }
+  }
+}

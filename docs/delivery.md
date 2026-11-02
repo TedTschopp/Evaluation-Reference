@@ -13,13 +13,15 @@ Date: 2026-11-02.
 
 ## Qualification evidence
 
-The full source passes Python verification, TypeScript contract tests, the production frontend build, and Worker type checking. Four Chrome scenarios passed both locally and against the deployed site, including light/dark mobile axe checks, keyboard focus, result import/export, and replay without backend access.
+The full source passes 80 Python tests with 118 corpus subtests, 12 TypeScript contract tests, the production frontend build, and Worker type checking. Chrome scenarios passed both locally and against the deployed site, including light/dark mobile axe checks, keyboard focus, result import/export, and replay without backend access.
 
 Each ZIP was extracted into its own temporary directory and installed into its own virtual environment. The Python edition passed its tests and started Streamlit. The React edition passed its Python service tests, served the page and bundled corpus, and independently installed, tested, and rebuilt its frontend using the included lockfiles.
 
 The first public deployment used one basic container with a maximum of one running instance. The container-backed health response confirmed Core 1.24.0, hosted endpoint restrictions, two execution slots, and no durable storage. Cloudflare subsequently reported the instance inactive after its idle interval.
 
 Both hosted model adapters demonstrated real function calling and completed streamed evaluations using llama3.2:3b through a temporary authenticated public HTTPS gateway. The task responses failed the declared evaluation criteria and were held. The gateway was closed afterward. Credential-free captured bundles are in examples/runs/ and can be imported into both apps.
+
+The final hosted build also passed a real stream-cancellation check and invalid-credential redaction. An independent AI judge completed all eight calibration requests, matching 3 of 8 reference judgments. Its required assessment remained unresolved, keeping the grader failure distinct from the agent's failed task criteria.
 
 The initial GitHub reference workflow passed on Linux, independently installing the locked Python and Node dependencies and rebuilding the packages. Current workflow status is available in the source repository's Actions tab.
 
