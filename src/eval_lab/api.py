@@ -4,6 +4,7 @@ import asyncio
 import json
 import os
 import time
+import anyio
 from collections import defaultdict,deque
 from pathlib import Path
 from fastapi import FastAPI,HTTPException,Request
@@ -93,7 +94,7 @@ async def connection_test(connection: EndpointConnection):
             return JSONResponse({"connected":False,"tools":False,"message":safe_error(error)},status_code=400)
 
 @app.post("/api/runs")
-async def run(request: RunRequest):
+async def run(request: RunRequest, http_request: Request):
     validate_connection(request.agent)
     if request.judge:
         validate_connection(request.judge)
@@ -118,23 +119,42 @@ async def run(request: RunRequest):
             except Exception as error:
                 emit({"type":"error","message":safe_error(error)})
         task=asyncio.create_task(perform())
+        async def watch_disconnect():
+            # ASGI 2.4 detects disconnects on the next send. Explicitly watch
+            # while a provider is busy so Stop need not wait for a heartbeat.
+            while not await http_request.is_disconnected():
+                await asyncio.sleep(.1)
+            task.cancel()
+            await queue.put(None)
+        disconnected=asyncio.create_task(watch_disconnect())
         try:
             while not task.done() or not queue.empty():
                 try:
                     item=await asyncio.wait_for(queue.get(),timeout=10)
+                    if item is None:
+                        break
                     yield json.dumps(item,ensure_ascii=False)+"\n"
                 except TimeoutError:
                     yield '{"type":"heartbeat"}\n'
             await task
         finally:
+            disconnected.cancel()
             if not task.done():
                 task.cancel()
-            await asyncio.gather(task,return_exceptions=True)
-            slots.release()
+            # Starlette closes disconnected streams inside an AnyIO cancel
+            # scope. Shield cleanup so cancellation cannot skip slot release.
+            with anyio.CancelScope(shield=True):
+                try:
+                    await asyncio.gather(task,disconnected,return_exceptions=True)
+                finally:
+                    slots.release()
     return StreamingResponse(stream(),media_type="application/x-ndjson",
         headers={"Cache-Control":"no-store","X-Accel-Buffering":"no"})
 
-static=Path(os.environ.get("EVAL_LAB_STATIC",Path(__file__).resolve().parents[2]/"web"/"dist"))
+default_static=Path.cwd()/"web"/"dist"
+if not default_static.is_dir():
+    default_static=Path(__file__).resolve().parents[2]/"web"/"dist"
+static=Path(os.environ.get("EVAL_LAB_STATIC",default_static))
 if static.is_dir():
     app.mount("/",StaticFiles(directory=static,html=True),name="web")
 

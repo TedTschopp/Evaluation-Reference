@@ -1,5 +1,9 @@
 import asyncio
 import json
+import socket
+import httpx
+import pytest
+import uvicorn
 from fastapi.testclient import TestClient
 from eval_lab import api
 from eval_lab.models import ModelEndpointDefinition
@@ -46,4 +50,40 @@ def test_unknown_case_and_hosted_private_endpoint(monkeypatch):
         assert client.post("/api/runs",json={"case_ids":["unknown"],"agent":connection()}).status_code==400
         monkeypatch.setattr(api,"HOSTED",True)
         assert client.post("/api/connections/test",json=connection()).status_code==400
+
+@pytest.mark.asyncio
+async def test_real_http_disconnect_cancels_work_and_releases_bounded_slots(monkeypatch):
+    cancelled=[]
+    async def slow_run(request,hosted,emit):
+        emit({"type":"started"})
+        try:
+            await asyncio.sleep(30)
+        finally:
+            cancelled.append(True)
+    monkeypatch.setattr(api,"execute_run",slow_run)
+    sock=socket.socket();sock.bind(("127.0.0.1",0))
+    port=sock.getsockname()[1]
+    server=uvicorn.Server(uvicorn.Config(api.app,log_level="error",lifespan="off"))
+    serving=asyncio.create_task(server.serve(sockets=[sock]))
+    try:
+        async with asyncio.timeout(5):
+            while not server.started:await asyncio.sleep(.01)
+        async with httpx.AsyncClient(base_url=f"http://127.0.0.1:{port}",timeout=5) as client:
+            payload={"case_ids":["senate-1789"],"agent":connection()}
+            async with client.stream("POST","/api/runs",json=payload) as first:
+                first_lines=first.aiter_lines()
+                assert json.loads(await anext(first_lines))["type"]=="started"
+                async with client.stream("POST","/api/runs",json=payload) as second:
+                    second_lines=second.aiter_lines()
+                    assert json.loads(await anext(second_lines))["type"]=="started"
+                    assert (await client.post("/api/runs",json=payload)).status_code==429
+                    assert (await client.get("/api/health")).json()["active_runs"]==2
+            for _ in range(100):
+                if api.slots._value==2 and len(cancelled)==2:break
+                await asyncio.sleep(.05)
+            assert (api.slots._value,len(cancelled))==(2,2)
+            assert (await client.get("/api/health")).json()["active_runs"]==0
+    finally:
+        server.should_exit=True
+        await serving
 

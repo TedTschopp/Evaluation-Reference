@@ -73,3 +73,12 @@ def test_credentials_not_exported():
     assert "sensitive-test-key" not in c.model_dump_json()
     assert "api_key" not in c.model_dump()
 
+@pytest.mark.asyncio
+async def test_text_response_does_not_establish_function_calling(monkeypatch):
+    def handle(request):
+        return httpx.Response(200,json={"id":"no-tools","object":"chat.completion","created":0,"model":"test-model",
+            "choices":[{"index":0,"message":{"role":"assistant","content":"I support tools."},"finish_reason":"stop"}]})
+    monkeypatch.setattr(providers,"transport",lambda hosted:httpx.MockTransport(handle))
+    probe=await providers.test_connection(definition(),True)
+    assert probe["connected"] and not probe["tools"]
+
