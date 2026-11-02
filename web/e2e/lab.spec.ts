@@ -85,5 +85,7 @@ test('captured judge failures stay distinct from authored calibration',async({pa
  await page.getByRole('button',{name:'Test the grader'}).click();
  await expect(page.getByRole('heading',{name:"This run's AI judge calibration"})).toBeVisible();
  await expect(page.getByRole('table',{name:'A mismatch or error leaves required AI assessments unresolved.'}).locator('tbody tr')).toHaveCount(8);
+ await page.getByRole('navigation',{name:'Guided lessons'}).getByRole('button',{name:'Compare versions'}).click();
+ await expect(page.getByRole('table',{name:'Captured attempts and available measurements'}).locator('tbody tr')).toHaveCount(1);
 });
 

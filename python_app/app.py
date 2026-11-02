@@ -206,6 +206,12 @@ elif step==4:
     st.bar_chart(frame,x="Version",y="Passed cases",horizontal=True)
     st.dataframe(pd.DataFrame([{"Case":c["title"],**{p["id"]:next(r["status"] for r in p["bundle"]["results"] if r["case_id"]==c["id"]) for p in replays["profiles"]}} for c in all_cases]),hide_index=True,width="stretch")
     st.info("The candidate improves from 8/12 to 11/12, but its critical ratification error still blocks release.")
+    if bundle.mode=="live":
+        st.subheader("Attempts in the selected run")
+        st.caption("Compare repeated case IDs to see variation. Measurements appear only when reported.")
+        st.dataframe(pd.DataFrame([{"Case":case_by_id(r.case_id)["title"],"Attempt":r.repetition,
+            "Version":r.profile,"Result":r.status,"Case time (ms)":r.latency_ms,
+            "Tokens":(r.tokens or {}).get("total_token_count")} for r in bundle.results]),hide_index=True,width="stretch")
 else:
     a,b=st.columns(2)
     initial=bundle.decision.policy
