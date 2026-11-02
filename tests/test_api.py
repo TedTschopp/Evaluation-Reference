@@ -34,6 +34,30 @@ def test_origin_and_payload_limits():
         assert client.post("/api/connections/test",json=connection(),headers={"Origin":"https://untrusted.example"}).status_code==403
         assert client.post("/api/connections/test",content=b"x"*65537).status_code==413
 
+def test_operator_origin_configuration_and_default_isolation(monkeypatch):
+    async def probe(*args):return {"connected":True,"tools":True,"message":"Verified"}
+    monkeypatch.setattr(api,"test_connection",probe)
+    monkeypatch.setenv("EVAL_LAB_ALLOWED_ORIGINS"," https://course.example,https://second.example ")
+    with TestClient(api.app) as client:
+        assert client.post("/api/connections/test",json=connection(),headers={"Origin":"https://course.example"}).status_code==200
+        assert client.post("/api/connections/test",json=connection(),headers={"Origin":"https://other.example"}).status_code==403
+        monkeypatch.delenv("EVAL_LAB_ALLOWED_ORIGINS")
+        assert client.post("/api/connections/test",json=connection(),headers={"Origin":"https://course.example"}).status_code==403
+
+def test_rate_limit_uses_only_explicitly_trusted_proxy_header(monkeypatch):
+    monkeypatch.setattr(api,"HOSTED",True)
+    api.limits.clear()
+    monkeypatch.delenv("EVAL_LAB_CLIENT_IP_HEADER",raising=False)
+    payload=connection();payload["definition"]["base_url"]="https://inference.example"
+    with TestClient(api.app) as client:
+        # Invalid case IDs stop before inference, but count toward the request budget.
+        for number in range(10):
+            assert client.post("/api/runs",json={"case_ids":["unknown"],"agent":payload},headers={"x-forwarded-client":str(number)}).status_code==400
+        assert client.post("/api/runs",json={"case_ids":["unknown"],"agent":payload}).status_code==429
+        monkeypatch.setenv("EVAL_LAB_CLIENT_IP_HEADER","x-forwarded-client")
+        assert client.post("/api/runs",json={"case_ids":["unknown"],"agent":payload},headers={"x-forwarded-client":"trusted-proxy-client"}).status_code==400
+    api.limits.clear()
+
 def test_runs_stream_terminal_result(monkeypatch):
     async def execute(request,hosted,emit):
         emit({"type":"started","expected_results":1})

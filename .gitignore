@@ -4,6 +4,9 @@ node_modules/
 web/dist/
 web/public/data/
 web/public/downloads/
+web/public/docs/
+web/public/integration/
+web/public/examples/
 dist/
 build/
 *.egg-info/
@@ -11,6 +14,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .wrangler/
+.hosting/
 .env
 !*.env.example
 test-results/

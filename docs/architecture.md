@@ -2,9 +2,9 @@
 
 ## Runtime
 
-A Cloudflare Worker serves React static assets. The three /api operations route to a Python/FastAPI container. Replay reads bundled data without waking the container.
+React replay is a static site with bundled data, fonts, and guides. A local Python/FastAPI service serves the same build and three /api operations for optional live runs. Any static host can serve replay; a reverse proxy can route /api to the Python service.
 
-The basic container has one instance and two concurrent operation slots. It sleeps after two idle minutes and remains awake during active work. Model inference occurs at the configured endpoint. There is no database or durable conversation store.
+The Python service permits two concurrent operations and has bounded request bodies and run durations. Model inference occurs at the configured endpoint. There is no database or durable conversation store. Deployment-specific routing, accounts, and lifecycle settings belong to the operator, outside this reference.
 
 Streamlit is an independent Python webapp using the same engine and data. Per-session jobs support cancellation with a two-job process limit.
 

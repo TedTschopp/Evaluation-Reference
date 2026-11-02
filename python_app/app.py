@@ -32,14 +32,15 @@ corpus=Corpus(corpus_data)
 all_cases=case_data["cases"]
 labels=["1 · Define the job","2 · Follow the evidence","3 · Change the boundary","4 · Test the grader","5 · Compare versions","6 · Decide what can ship"]
 with st.sidebar:
-    st.caption("TEDT.ORG / PUBLIC WORKBENCH")
+    st.caption("FOUNDING DOCUMENTS / REFERENCE IMPLEMENTATION")
     st.header("AI evaluation lab")
     lesson=st.radio("Guided walkthrough",labels,label_visibility="collapsed")
     mode=st.radio("Execution mode",["Replay","Live"],horizontal=True)
     profile=st.selectbox("Agent version",[p["id"] for p in replays["profiles"]],
         index=1,format_func=lambda x:next(p["title"] for p in replays["profiles"] if p["id"]==x))
     st.caption("Microsoft Agent Framework 1.24.0\n\n31 texts · 12 cases · about 20 minutes")
-    st.link_button("Read Ted's article","https://tedt.org/Your-AI-Passed-the-Test/")
+    with st.expander("Instructor guide"):
+        st.markdown((ROOT/"docs"/"instructor-guide.md").read_text())
     imported=st.file_uploader("Import a RunBundle",type=["json"],max_upload_size=16)
     if imported:
         try:

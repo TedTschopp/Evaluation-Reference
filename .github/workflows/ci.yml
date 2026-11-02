@@ -27,6 +27,6 @@ jobs:
       - run: uv run --no-editable python scripts/build_assets.py
       - run: npm --prefix web run test
       - run: npm --prefix web run build
-      - run: node web/node_modules/typescript/bin/tsc --project worker/tsconfig.json
       - run: uv run --no-editable python scripts/package_downloads.py
+      - run: uv run --no-editable python scripts/check_portability.py
 

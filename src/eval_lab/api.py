@@ -31,7 +31,8 @@ async def controls(request: Request, call_next):
             return JSONResponse({"detail":"Request exceeds the 64 KiB limit."},status_code=413)
         if request.method=="POST":
             origin = request.headers.get("origin")
-            allowed = {f"{request.url.scheme}://{request.url.netloc}","https://evals.tedt.org"}
+            allowed = {f"{request.url.scheme}://{request.url.netloc}"}
+            allowed |= {value.strip() for value in os.environ.get("EVAL_LAB_ALLOWED_ORIGINS", "").split(",") if value.strip()}
             if not HOSTED:
                 allowed |= {"http://127.0.0.1:5173","http://localhost:5173","http://127.0.0.1:5174","http://localhost:5174","http://localhost:8000","http://127.0.0.1:8000"}
             if origin and origin not in allowed:
@@ -45,7 +46,8 @@ async def controls(request: Request, call_next):
             request._body = bytes(body)
             if HOSTED:
                 now=time.monotonic()
-                address=request.headers.get("cf-connecting-ip") or (request.client.host if request.client else "unknown")
+                trusted_header=os.environ.get("EVAL_LAB_CLIENT_IP_HEADER", "")
+                address=(request.headers.get(trusted_header) if trusted_header else None) or (request.client.host if request.client else "unknown")
                 entries=limits[address]
                 while entries and now-entries[0]>60:
                     entries.popleft()

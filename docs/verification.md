@@ -10,13 +10,19 @@ Recorded 2026-11-02. This is a reference implementation and a bounded teaching s
 - Chrome checks exercise the lesson navigator, source browser, graders, release controls, downloads, keyboard navigation, result export/import, iframe layout, mobile sizing, reduced motion, and replay during backend failure. Automated axe checks cover the initial mobile light and dark views; these checks are not a complete accessibility certification.
 - The independently installed Python webapp was also checked in Chrome at 390-pixel width, with reduced motion and both native light and dark themes. The rendered initial lesson passed axe checks without horizontal overflow. Version 1.0.1 corrects caption opacity and wraps source identifiers to preserve contrast and keyboard access.
 
+## Portability checks for 1.1.0
+
+The full source passed 82 Python tests and 118 corpus subtests. Independent clean installations passed 82 tests in the Python edition and 81 in the React edition's service; the latter intentionally omits Streamlit's UI test. Fifteen TypeScript tests passed. All six browser scenarios passed against the independently extracted React build served beneath a `/course/` subdirectory, including local guides, bundled fonts, embedding height messages, import/export, mobile light/dark accessibility, and replay with an unavailable API. Observed replay and embed requests stayed on the local installation's origin.
+
+The portability guard scans source, compiled assets, and every member of both archives. It rejects prohibited host destinations and account fields and checks for omitted operator files, required data, and portable archive catalogues. Source transcriptions, canonical judgments, and captured evaluation results retain their original content and metadata; only recorded endpoint addresses and their explanatory provenance changed.
+
 Run the checks from the full source checkout:
 
 ~~~sh
 uv run --no-editable pytest
 npm --prefix web run test
 npm --prefix web run build
-node web/node_modules/typescript/bin/tsc --project worker/tsconfig.json
+uv run --no-editable python scripts/check_portability.py
 # Start Vite on localhost:5174, then run in the web directory:
 npm exec -- playwright test --config playwright.config.ts
 ~~~
@@ -33,7 +39,7 @@ No paid provider credential was used or installed. Live diagnostic traces and mo
 
 The two downloads contain the same corpus, authored replay results, schemas, and engine. Their ZIP checksums accompany the hosted files. Each edition has its own startup README.
 
-Hosted deployment requires a successful static-page check, a container-backed health response, and a completed streamed model run. Worker deployment success alone is insufficient. Deployment and clean-download results are recorded separately under docs/delivery.md when available.
+Hosted deployment requires a successful static-page check, a container-backed health response, and a completed streamed model run. A successful upload alone is insufficient. Validate each deployment separately from local and clean-download checks.
 
 ## Practical limits
 

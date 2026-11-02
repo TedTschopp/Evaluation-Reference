@@ -1,5 +1,9 @@
 # Changes
 
+## 1.1.0
+
+Make the public reference and both downloads portable: bundle local guides, use relative navigation and downloads, configure embedding and API origins, remove operator deployment settings and dependencies, and redact expired endpoint addresses from captured examples. Add source/build/archive portability checks and subdirectory browser verification. Preserve corpus text, case requirements, evaluator behavior, and recorded result metadata.
+
 ## 1.0.1
 
 Improve Python caption contrast in both themes and wrap source identifiers so their code blocks do not require inaccessible horizontal scrolling. Verify the rendered mobile Python interface in both themes. The corpus, case expectations, evaluation criteria, policy, and endpoint adapters are unchanged.

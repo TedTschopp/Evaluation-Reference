@@ -1,12 +1,12 @@
-# Blog integration
+# Embedding your installation
 
-The full app is at https://evals.tedt.org. The supplied ai-evaluation-lab.html file is a Jekyll landing page for /ai-evaluation-lab/ on tedt.org.
+The self-contained [example](embed.html) assumes it is served at `integration/embed.html` beneath the lab. Its links use the local parent directory. Copy it to your site and adjust those relative paths to your deployment.
 
-For an existing article, insert the iframe from embed.html. The app has an embedded layout and posts height changes only to the tedt.org parent. The optional resize listener verifies the exact child origin before updating the iframe.
+The iframe uses `embed=1`. The example sets `parent_origin` to the parent page's exact origin. The app sends height updates only to that validated HTTP(S) origin. The parent listener verifies both the child's origin and window identity.
 
-The lab's Content-Security-Policy frame-ancestors directive permits tedt.org and its subdomains. TedT.org also adds a zone-wide X-Frame-Options header; supported modern browsers give the CSP directive precedence.
+For different parent and child origins, set the iframe's lab URL and the full-page link to your own installation, and retain the checks in the example. Configure the parent's Content-Security-Policy `frame-src` and the lab's `frame-ancestors` for the intended origins. The reference imposes no personal-domain allowlist.
 
-The parent blog's policy must permit the child too. TedT.org's shared content-security-policy include adds https://evals.tedt.org to frame-src for /ai-evaluation-lab/ and /Your-AI-Passed-the-Test/. Other blog pages retain their existing policy. When adapting this template to another site, configure the parent frame-src and the lab's frame-ancestors for the intended origins.
+The app's reference-materials panel can generate an iframe URL from the currently running installation. Supply the parent origin there if automatic height updates are wanted. Without one, the iframe still works at its specified fixed height.
 
 The article uses a native details/summary disclosure with a short guide. Its iframe loads on first expansion on wider screens and retains the selected lesson when collapsed and reopened. At phone widths, the disclosure provides a full-page lab link so its evidence and controls have more room.
 

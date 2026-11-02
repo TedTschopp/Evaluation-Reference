@@ -2,7 +2,7 @@
 
 A visual reference for evaluating an AI agent's **work**, using 31 U.S. founding and constitutional texts. The six-lesson walkthrough takes about 20 minutes.
 
-**[Open the hosted lab](https://evals.tedt.org)** · [Read the article](https://tedt.org/Your-AI-Passed-the-Test/) · [Instructor guide](docs/instructor-guide.md)
+[Instructor guide](docs/instructor-guide.md) · [Portable deployment](docs/deployment.md) · [Portability changes](docs/portability.md)
 
 Two independently runnable webapps share the corpus, cases, Microsoft evaluation engine, and JSON contracts. Replay needs no model, API key, or Azure account. Optional live execution supports configurable OpenAI-compatible and native Ollama endpoints.
 
@@ -63,6 +63,7 @@ Use Node.js 24 LTS for the source build.
 ~~~sh
 npm ci
 npm --prefix web ci
+uv sync --frozen --no-editable --extra dev
 uv run --no-editable python scripts/build_assets.py
 npm run dev
 ~~~
@@ -112,11 +113,12 @@ uv run --no-editable python scripts/build_assets.py
 npm --prefix web run test
 npm --prefix web run build
 uv run --no-editable python scripts/package_downloads.py
+uv run --no-editable python scripts/check_portability.py
 ~~~
 
-The packaging script writes two self-contained ZIPs and checksums, then places them beside the hosted build. It excludes virtual environments, model weights, credentials, caches, and live diagnostic artifacts.
+The packaging script writes two self-contained ZIPs and checksums, then places them beside the hosted build with a relative-path download catalogue. Each ZIP has a portable catalogue without links to an external download service. It excludes virtual environments, model weights, credentials, caches, and live diagnostic artifacts.
 
-See [verification](docs/verification.md), [Cloudflare deployment](docs/cloudflare-setup.md), and [blog integration](integration/).
+See [verification](docs/verification.md), [portable deployment](docs/deployment.md), and [embedding](integration/).
 
 ## Corpus and licensing
 

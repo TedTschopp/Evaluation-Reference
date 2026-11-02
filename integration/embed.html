@@ -1,12 +1,21 @@
-<p><a href="https://evals.tedt.org/">Open the AI evaluation lab in a full page</a></p>
-<iframe id="ai-evaluation-lab" src="https://evals.tedt.org/?embed=1" title="Founding Documents AI Evaluation Lab" width="100%" height="1100" loading="lazy" style="border:1px solid #dbddd4;border-radius:6px"></iframe>
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Embed the evaluation lab</title>
+<style>body{font:1rem/1.6 system-ui,sans-serif;max-width:80rem;margin:2rem auto;padding:0 1rem;color-scheme:light dark}iframe{width:100%;border:1px solid #888;border-radius:6px}summary{cursor:pointer;font-weight:600}a{color:LinkText}</style></head>
+<body><h1>Follow an answer from evidence to release</h1><p>This exercise uses bundled founding documents to show why an authentic source can still answer the wrong question.</p>
+<p><a href="../" target="_blank" rel="noopener">Open this installation in a full page</a></p>
+<details id="exercise"><summary>Interactive lab: inspect evidence, graders, and the release decision</summary><p>About 20 minutes. Replay needs no model credentials. Start with Candidate, follow its citation, then compare its failed critical case with Revised.</p>
+<iframe id="evaluation-lab" data-src="../?embed=1" title="Founding Documents AI Evaluation Lab" height="1100" loading="lazy" hidden></iframe></details>
 <script>
-window.addEventListener("message", function (event) {
-  if (event.origin !== "https://evals.tedt.org" || event.data?.type !== "eval-lab-height") return;
-  const frame = document.getElementById("ai-evaluation-lab");
-  if (event.source !== frame?.contentWindow) return;
-  const height = Number(event.data.height);
-  if (Number.isFinite(height)) frame.style.height = Math.max(700, Math.min(5000, height)) + "px";
+const frame=document.getElementById('evaluation-lab');
+const lab=new URL(frame.dataset.src,location.href);
+lab.searchParams.set('parent_origin',location.origin);
+document.getElementById('exercise').addEventListener('toggle',function(){
+ if(this.open&&!frame.hasAttribute('src')){frame.src=lab.href;frame.hidden=false;}
 });
-</script>
-
+window.addEventListener('message',function(event){
+ if(event.origin!==lab.origin||event.source!==frame.contentWindow||event.data?.type!=='eval-lab-height')return;
+ const height=Number(event.data.height);
+ if(Number.isFinite(height))frame.style.height=Math.max(700,Math.min(5000,height))+'px';
+});
+</script></body></html>

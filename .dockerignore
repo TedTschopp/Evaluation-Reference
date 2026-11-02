@@ -8,4 +8,5 @@ test-results
 .playwright-mcp
 dist
 .env
+.hosting
 

@@ -3,7 +3,7 @@
   "id": "6f53cfbb-c221-45f0-9675-d980a7bed703",
   "created_at": "2026-11-02T16:55:58.166506+00:00",
   "mode": "live",
-  "provenance": "Captured model runs evaluated by Microsoft Agent Framework. No model pricing or missing metrics are inferred.",
+  "provenance": "Captured model runs evaluated by Microsoft Agent Framework. No model pricing or missing metrics are inferred. Endpoint addresses were redacted for portable distribution; recorded responses, events, grades, and version metadata are preserved.",
   "versions": {
     "app": "1.0.0",
     "framework": "agent-framework-core==1.24.0",
@@ -18,7 +18,7 @@
     "id": "hosted-smoke-openai_chat_completions",
     "name": "Temporary hosted qualification",
     "protocol": "openai_chat_completions",
-    "base_url": "https://redhead-miniature-missions-did.trycloudflare.com/v1",
+    "base_url": "https://recorded-endpoint.invalid/v1",
     "model": "llama3.2:3b",
     "authentication": {
       "type": "bearer",

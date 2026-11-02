@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 test('guided lesson, sources, graders, policies, and downloads',async({page})=>{
- await page.goto('/');
+ await page.goto('./');
  await expect(page.getByRole('heading',{level:1})).toHaveText('Did it answer the question?');
  await expect(page.getByText('Twelve amendments were ratified',{exact:false}).first()).toBeVisible();
  await page.getByRole('button',{name:'Observable action trace'}).click();
@@ -20,14 +20,14 @@ test('guided lesson, sources, graders, policies, and downloads',async({page})=>{
  await expect(page.getByRole('heading',{name:'Hold this version.'})).toBeVisible();
  await page.getByLabel('Agent version').selectOption('revised');
  await expect(page.getByRole('heading',{name:'Meets the selected policy.'})).toBeVisible();
- await page.getByRole('button',{name:'Download reference'}).click();
- await expect(page.getByRole('link',{name:'Python webapp'})).toBeVisible();
+ await page.getByRole('button',{name:/^(Download reference|Reference materials)$/}).click();
+ await expect(page.getByRole('dialog').getByRole('link',{name:'Instructor guide',exact:true})).toBeVisible();
  await page.keyboard.press('Escape');
  await page.screenshot({path:'../artifacts/release-desktop.png',fullPage:true});
 });
 test('mobile, keyboard, themes, and accessibility',async({page})=>{
  await page.setViewportSize({width:390,height:844});
- await page.goto('/');
+ await page.goto('./');
  await expect(page.getByRole('heading',{level:1})).toHaveText('Did it answer the question?');
  await page.keyboard.press('Tab');
  await expect(page.getByRole('link',{name:'Skip to lesson'})).toBeFocused();
@@ -52,7 +52,7 @@ test('mobile, keyboard, themes, and accessibility',async({page})=>{
  await page.screenshot({path:'../artifacts/mobile-light.png',fullPage:true});
 });
 test('results export and import preserve decisions',async({page})=>{
- await page.goto('/');
+ await page.goto('./');
  const downloadEvent=page.waitForEvent('download');
  await page.getByRole('button',{name:'Export run',exact:true}).click();
  const download=await downloadEvent;
@@ -67,7 +67,7 @@ test('results export and import preserve decisions',async({page})=>{
 });
 test('replay and embedding survive an unavailable backend',async({page})=>{
  await page.route('**/api/**',route=>route.abort());
- await page.goto('/?embed=1');
+ await page.goto('./?embed=1');
  await expect(page.getByRole('link',{name:'Open full lab'})).toBeVisible();
  await expect(page.locator('.answer-text')).toContainText('Twelve');
  await page.getByRole('button',{name:'Run it live'}).click();
@@ -77,7 +77,7 @@ test('replay and embedding survive an unavailable backend',async({page})=>{
  await expect(page.locator('.answer-text')).toBeVisible();
 });
 test('captured judge failures stay distinct from authored calibration',async({page})=>{
- await page.goto('/');
+ await page.goto('./');
  await expect(page.getByRole('heading',{level:1})).toHaveText('Did it answer the question?');
  await page.locator('input[type=file]').first().setInputFiles('../examples/runs/with-judge.json');
  await expect(page.getByRole('heading',{name:'An authentic source can be the wrong source.'})).toBeVisible();

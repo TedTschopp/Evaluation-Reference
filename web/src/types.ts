@@ -15,5 +15,6 @@ export interface RunBundle {schema_version:'1.0';id:string;created_at:string;mod
 export interface Profile {id:string;title:string;description:string;bundle:RunBundle}
 export interface Calibration {id:string;label:string;case_id:string;text:string;citations:string[];disposition:string;as_of:string|null;retrieved_passage_ids:string[];expected_pass:boolean;explanation:string;actual_pass:boolean;weak_pass:boolean;matches_reference:boolean;result:CaseResult}
 export interface Replays {provenance:string;profiles:Profile[];calibration:Calibration[]}
-export interface LabData {corpus:Corpus;cases:Case[];replays:Replays}
+export interface Distribution {schema_version:'1.0';version:string;downloads:{edition:'python'|'react';href:string}[];checksums?:string}
+export interface LabData {corpus:Corpus;cases:Case[];replays:Replays;distribution:Distribution}
 
