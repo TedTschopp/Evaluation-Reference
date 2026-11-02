@@ -21,6 +21,7 @@ st.markdown("""<style>
 :root{--primary-color:#00446f} .block-container{padding-top:2.5rem;max-width:1400px}
 h1,h2,h3{letter-spacing:-.035em}div[data-testid=stMetric]{background:#00446f0d;border:1px solid #64748b33;padding:1rem;border-radius:.35rem}
 [data-testid=stSidebar]{border-right:1px solid #64748b33}.stCaption{line-height:1.7}
+[data-testid=stCaptionContainer]{opacity:.85!important}
 </style>""",unsafe_allow_html=True)
 
 @st.cache_data
@@ -239,7 +240,7 @@ with st.expander("Evidence desk and complete corpus",expanded=step<3):
         if retrieved:
             pid=st.selectbox("Passage returned by a tool",retrieved)
             p=corpus.passages[pid];d=corpus.documents[p["document_id"]]
-            st.subheader(p["label"]);st.write(p["text"]);st.code(pid)
+            st.subheader(p["label"]);st.write(p["text"]);st.code(pid,language=None,wrap_lines=True)
             with st.expander("Archival annotations (separate from primary text)"):
                 for note in d["annotations"]:st.write(note)
             st.link_button("National Archives source",d["source_url"])

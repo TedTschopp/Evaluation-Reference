@@ -8,6 +8,7 @@ Recorded 2026-11-02. This is a reference implementation and a bounded teaching s
 - Python verification covers corpus and fixtures, actual Microsoft LocalEvaluator and evaluate_agent behavior, evidence restrictions, temporal scope, paraphrases, clarification, error handling, imported decisions, credential redaction, and the six Streamlit lessons.
 - TypeScript contract checks verify parity with the three bundled Python decisions, partial suites, critical failures, tampered imports, and streamed event parsing.
 - Chrome checks exercise the lesson navigator, source browser, graders, release controls, downloads, keyboard navigation, result export/import, iframe layout, mobile sizing, reduced motion, and replay during backend failure. Automated axe checks cover the initial mobile light and dark views; these checks are not a complete accessibility certification.
+- The independently installed Python webapp was also checked in Chrome at 390-pixel width, with reduced motion and both native light and dark themes. The rendered initial lesson passed axe checks without horizontal overflow. Version 1.0.1 corrects caption opacity and wraps source identifiers to preserve contrast and keyboard access.
 
 Run the checks from the full source checkout:
 
